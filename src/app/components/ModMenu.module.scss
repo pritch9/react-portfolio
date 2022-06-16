@@ -1,0 +1,24 @@
+#ModMenu {
+  padding: 1rem;
+
+  display: flex;
+  align-items: center;
+
+  @media print {
+    display: none;
+  }
+
+  > *:not(:first-child) {
+    margin-left: 1rem;
+  }
+
+  #Title {
+    padding: 0.25rem;
+    font-size: 1.1rem;
+  }
+
+  #PrintButton {
+    font-size: 1.1rem;
+    padding: 0.15rem .5rem;
+  }
+}

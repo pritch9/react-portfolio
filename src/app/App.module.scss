@@ -6,7 +6,8 @@
   flex-direction: column;
 
   @media print {
-    max-height: 11in;
+      max-height: 11in;
+      min-height: 11in;
   }
 
   #Content {

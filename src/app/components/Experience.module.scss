@@ -8,6 +8,9 @@
 
   .Section {
     flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     > .Title {
       flex: 0 0 auto;
