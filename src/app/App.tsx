@@ -166,7 +166,7 @@ const App: FC = () => {
     }
 
     useEffect(() => {
-        document.title = `${title} - ${name}'s Resume - ${prettyDate(new Date())}`
+        document.title = `${activeTitle} - ${name}'s Resume - ${prettyDate(new Date())}`
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
