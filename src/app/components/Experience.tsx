@@ -1,6 +1,8 @@
 import {FC, useMemo} from "react"
 import styles from "./Experience.module.scss"
 import {classNames, isJobInfo, isProjectInfo, prettyDateInfo, prettyTimeFrame} from "../../utilities";
+import {Scorable} from "./Scorable";
+import {SortByScore} from "../App";
 
 export type ExperienceProps = {
     className: string,
@@ -15,19 +17,23 @@ type ExperienceSectionProps = {
 type ExperienceSectionTemplate = {
     title: string,
     subTitle: string,
-    timeFrame: string
+    timeFrame?: string
+    contract?: string
     keywords?: string[],
     bullets?: string[],
     manager?: string,
     address?: Address,
 }
+const ManagerText = "Manager";
+
 const ExperienceSection: FC<ExperienceSectionProps> = ({info}) => {
-    const {title, subTitle, timeFrame, manager, keywords, address, bullets} = useMemo<ExperienceSectionTemplate>(() => {
+    const {title, subTitle, timeFrame, contract, manager, keywords, address, bullets} = useMemo<ExperienceSectionTemplate>(() => {
         if (isJobInfo(info)) {
             return {
                 title: info.role,
                 subTitle: info.company,
                 timeFrame: prettyTimeFrame(info.timeFrame),
+                contract: prettyTimeFrame(info.contract),
                 manager: info.manager,
                 keywords: info.keywords,
                 address: info.address,
@@ -50,35 +56,46 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({info}) => {
         return <div className={styles.Bullet} key={`xp_${index}`}>{bullet}</div>
     })
 
-    const Keywords = keywords?.sort().map((keyword, index) => {
-        return <div className={styles.Keyword} key={`kw_${index}`}>{keyword}</div>
+    const Keywords = keywords?.sort(SortByScore).map((keyword, index) => {
+        return <Scorable title={keyword} className={styles.Keyword} key={`kw_${index}`} />
     })
 
     const isNotEmpty = bullets && keywords;
 
     return <div className={classNames([styles.XPSegment, !isNotEmpty && styles.Empty])}>
         <div className={styles.TitleBar}>
-            <div className={styles.Title}>{title}</div>
-            <div className={styles.SubTitle}>{subTitle}</div>
-            <div className={styles.TimeFrame}>{timeFrame}</div>
-        </div>
-        { isNotEmpty &&
-            <>
-                <div className={styles.SideBar}>
-                    {
-                        manager && <div className={styles.Manager}>
-                            <div className={styles.Label}>Manager</div>
-                            <div className={styles.Name}>{manager}</div>
-                        </div>
-                    }
-                    <div className={styles.Keywords}>{Keywords}</div>
+            <div className={styles.TitleContainer}>
+                <div className={styles.Title}>
+                    {title}
+                    <div className={styles.TimeFrame}>
+                        <span>{timeFrame}</span>
+                        {contract && <div className={styles.Contract}>{contract}</div>}
+                    </div>
+                </div>
+                <div className={styles.SubTitle}>
+                    <div className={styles.Title}>{subTitle}</div>
                     {address && <div className={styles.Address}>
                         <div className={styles.Street}>{address.street},</div>
                         <div className={styles.CityZip}>{address.city} {address.zip}</div>
                     </div>}
                 </div>
+            </div>
+        </div>
+        { isNotEmpty &&
+            <>
+				{
+					manager && <div className={styles.CompanyInfo}>
+						<div className={styles.Manager}>
+							<div className={styles.Label}>{ManagerText}</div>
+							<div className={styles.Name}>{manager}</div>
+						</div>
+					</div>
+				}
                 <div className={styles.Bullets}>
                     {Bullets}
+                </div>
+                <div className={styles.SideBar}>
+                    <div className={styles.Keywords}>{Keywords}</div>
                 </div>
             </>
         }
@@ -95,6 +112,9 @@ const Experience: FC<ExperienceProps> = ({className, jobs, projects}) => {
     });
 
     return <div id={styles.Experience} className={className}>
+        <div id={styles.Legend}>
+            <span style={{ fontStyle: 'italic' }}>Comfortability</span><Scorable value={4} />
+        </div>
         <div className={styles.Section}>
             <div className={styles.Title}>Job Experience</div>
             {Jobs}

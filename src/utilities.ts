@@ -43,7 +43,7 @@ export function isProjectInfo(x: any): x is ProjectInfo {
     const props: PropsList = [
         ["title", isStringObject],
         ["role", isStringObject],
-        ["date", isDateInfo],
+        ["date", isOptional(isDateInfo)],
         ["keywords", isOptional(isStringArray)],
         ["bullets", isOptional(isStringArray)],
     ];
@@ -78,7 +78,8 @@ export function isOptional(validator: (x: any) => boolean) {
     }
 }
 
-export function prettyTimeFrame(x: TimeFrame): string {
+export function prettyTimeFrame(x?: TimeFrame): string|undefined {
+    if (!x) return undefined;
     const { start, end } = x;
     return `${prettyDateInfo(start)} - ${prettyDateInfo(end)}`
 }

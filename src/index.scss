@@ -18,16 +18,19 @@ html {
   --primary-color: #4378ac;
   --secondary-color: #b3d5ff;
   --tertiary-color: #eff4fc;
+  --warning-color: #ffae6c;
 
   --grey-lightest: #f5f5f5;
   --grey-light: #dcdcdc;
   --grey: #c4c4c4;
+
+  --page-padding: 0.5in;
 }
 
 @media print {
   html {
     font-size: 12px;
-    line-height: 1.1rem;
+    line-height: 1.05rem;
 
     * {
       box-shadow: none !important;

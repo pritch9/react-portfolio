@@ -8,6 +8,7 @@ type ModMenuProps = {
 
 const ModMenu: FC<ModMenuProps> = ({ title, setTitle }) => {
     const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
+        console.log(`CHanging title to ${event.target.value}`)
         setTitle(event.target.value)
     }
 

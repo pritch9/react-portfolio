@@ -20,10 +20,8 @@ type DateInfo = {
 type JobInfo = {
     role: string,
     company: string,
-    timeFrame: {
-        start: DateInfo,
-        end: DateInfo
-    },
+    timeFrame: TimeFrame,
+    contract?: TimeFrame,
     manager?: string,
     address?: Address,
     keywords?: string[],
@@ -33,7 +31,7 @@ type JobInfo = {
 type ProjectInfo = {
     title: string,
     role: string,
-    date: DateInfo,
+    date?: DateInfo,
     keywords: string[],
     bullets: string[]
 }
