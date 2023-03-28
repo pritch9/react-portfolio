@@ -1,13 +1,15 @@
 #App {
   min-height: 100vh;
   max-width: 100%;
+  width: 1200px;
+  margin: 0 auto;
 
   display: flex;
   flex-direction: column;
 
+  overflow: hidden;
   @media print {
-      max-height: 11in;
-      min-height: 11in;
+    height: min-content;
   }
 
   #Content {
@@ -21,7 +23,7 @@
     }
 
     .SideBar {
-      flex: 1 1 max-content;
+      flex: 1 1 fit-content;
     }
   }
 }

@@ -15,7 +15,7 @@ export const Scores: Record<string, number> = {
 	"PHP": 3,
 	"BASH": 2,
 	"OCaml": 1,
-	"Rust": 4,
+	"Rust": 3,
 	"REST": 4,
 	"GraphQL": 3,
 	"AWS": 3,
@@ -29,17 +29,20 @@ export const Scores: Record<string, number> = {
 	"Email Services": 2,
 	"WebAuthn": 3,
 	"Python": 3,
-	"Terraform": 2,
+	"Terraform": 3,
 	"Java": 4,
 	"Swift": 2,
 	"Distributed Systems": 3,
 	"Protobuf": 2,
 	"AngularJS": 2,
+	"NextJS": 2,
 	"Sass": 3,
 	"Authentication": 4,
-	"Security": 3,
+	"Security/Cryptography": 3,
 	"Networking": 3,
 	"Cryptography": 3,
+	'Embedded Systems': 2,
+	'Internet Applications': 4
 }
 
 /*
@@ -53,25 +56,24 @@ let scorable = [
 ].flat();
  */
 
-const {name, title, contactInfo, education, miscExperience, achievements, experience, professionalSummary} = {
+const {name, title, contactInfo, education, miscExperience, miscExperienceDescription, achievements, experience, professionalSummary} = {
 	name: "William Pritchard",
 	title: "Software Engineer",
 	contactInfo: {
 		"Phone Number": "(206) 227-3609",
 		"Email Address": "will@pritch.net",
 		"LinkedIn": "LinkedIn.com/in/wpritcha",
-		"GitHub": "Github.com/pritch9",
+		"GitHub": ["Github.com/pritch9\t\t- School (archive)", "Github.com/pritch09\t- Employment", "Github.com/pritch009\t- Personal (active)"],
 	},
 	professionalSummary: '',
 	education: {
 		"University at Buffalo, SUNY": "B.S. Computer Science, 2020"
 	},
+	miscExperienceDescription: "Spending lot of my free time tinkering and building, I try to pick up skills to help support my personal projects.  While not all have been applicable to my professional work, I'm comfortable working with what I've listed here, and very open to learning more skills related to areas of interest if required!",
 	miscExperience: {
-		"Cloud": ["AWS"],
-		"Servers": ["Linux", "SQL"],
-		"APIs": ["REST", "GraphQL"],
-		"Internet": ["Security", "Authentication", "Networking", "Cryptography"],
-		"Programming": ["C", "ASM", "C++", "PHP", "BASH", "OCaml", "Rust"],
+		'Cloud Development': ["AWS", "Terraform"],
+		'Areas of Interest': ['Security/Cryptography', 'Embedded Systems', 'Distributed Systems', 'Internet Applications'],
+		'Programming': ["C", "C++", "PHP", "BASH", "Rust"],
 	},
 	achievements: {
 		"Boy Scouts of America": "Eagle Scout"
@@ -162,12 +164,12 @@ const {name, title, contactInfo, education, miscExperience, achievements, experi
 			{
 				title: "PritchNet",
 				role: "Creator",
-				keywords: ["Rust", "Distributed Systems", "Protobuf"],
+				keywords: ["Rust", "Distributed Systems", "Protobuf", "NextJS", "PostgreSQL", "Terraform"],
 				bullets: [
 					"Proprietary, distributed, peer-to-peer network operating system",
 					"Generic application framework for building secure, reliable, and confidential applications",
 					"Cloud computing techniques leveraged to provide a scalable, fault-tolerant, and highly available network",
-					"Project website: https://pritch.net/"
+					"Project website (built with NextJS 13 beta): https://pritch.net/"
 				]
 			},
 			{
@@ -177,7 +179,7 @@ const {name, title, contactInfo, education, miscExperience, achievements, experi
 					month: "August",
 					year: 2019
 				},
-				keywords: ["SQL", "AngularJS", "Sass", "TypeScript", "NodeJS"],
+				keywords: ["SQL", "TypeScript", "NodeJS"],
 				bullets: [
 					"Authentication API with permission-based security model",
 					"Automatic database creation with customization options for more advanced users",
@@ -194,7 +196,10 @@ const App: FC = () => {
 
 	const sidebarInfo = {
 		"Education": education,
-		"Misc. Experience": miscExperience,
+		"Misc. Experience": {
+			description: miscExperienceDescription,
+			experience: miscExperience
+		},
 		"Achievements": achievements
 	}
 

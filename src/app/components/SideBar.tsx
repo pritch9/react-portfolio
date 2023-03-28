@@ -5,19 +5,31 @@ import logo from '../../logo.svg'
 import {Scorable} from "./Scorable";
 import {SortByScore} from "../App";
 
+export type ExperienceSection = Record<string, string|string[]>
+
+export type ExperienceSectionWithDescription = {
+    experience: ExperienceSection,
+    description: string
+};
+
 export type SideBarProps = {
     className: string,
-    info: Record<string, Record<string, string|string[]>>
+    info: Record<string, ExperienceSectionWithDescription|ExperienceSection>
 }
 
-const MapSubSection: (subSection: [string, Record<string, string|string[]>], index: number) => JSX.Element = ([key, subSection], index) => {
+const MapSubSection: (subSection: [string, ExperienceSection | ExperienceSectionWithDescription], index: number) => JSX.Element = ([key, subSection], index) => {
+    const [experience, description] = ('description' in subSection && 'experience' in subSection)
+        ? [subSection.experience, subSection.description]
+        : [subSection, undefined]
+
     const Segments = Object
-        .entries(subSection)
+        .entries(experience)
         .sort()
         .map(MapSubSegment);
 
     return <div className={styles.Section} key={`ciss_${index}`}>
         <div className={styles.Label}>{key}</div>
+        { description && <div className={styles.Description}>{ description }</div> }
         { Segments }
     </div>
 }

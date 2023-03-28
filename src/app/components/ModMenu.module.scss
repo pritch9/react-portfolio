@@ -1,5 +1,5 @@
 #ModMenu {
-  padding: 1rem;
+  padding: 1em;
 
   display: flex;
   align-items: center;
@@ -9,16 +9,16 @@
   }
 
   > *:not(:first-child) {
-    margin-left: 1rem;
+    margin-left: 1em;
   }
 
   #Title {
-    padding: 0.25rem;
-    font-size: 1.1rem;
+    padding: 0.25em;
+    font-size: 1.1em;
   }
 
   #PrintButton {
-    font-size: 1.1rem;
-    padding: 0.15rem .5rem;
+    font-size: 1.1em;
+    padding: 0.15em .5em;
   }
 }

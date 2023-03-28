@@ -1,5 +1,5 @@
 #SideBar {
-  padding: 1rem 1rem var(--page-padding) var(--page-padding);
+  padding: 1em 1em var(--page-padding) var(--page-padding);
   box-sizing: border-box;
   border-right: 1px solid gray;
   position: relative;
@@ -19,15 +19,22 @@
     flex: 0 0 auto;
 
     &:not(:first-child) {
-      margin-top: 1rem;
+      margin-top: 1em;
     }
     > .Label {
       font-weight: bold;
       opacity: 0.75;
     }
 
+    .Description {
+      font-size: 0.9em;
+      padding: 0.5em 0;
+      width: fit-content;
+      box-sizing: border-box;
+    }
+
     .Segment {
-      padding: 0.5rem 0;
+      padding: 0.5em 0;
 
       > .Label {
         font-weight: bold;
@@ -35,14 +42,14 @@
       }
 
       > .Values {
-        padding: 0.2rem 0;
+        padding: 0.2em 0;
         font-size: 0.9em;
         .Value {
-          padding: 0.1rem 0;
+          padding: 0.1em 0;
           &:before {
             content: '•';
             font-weight: normal;
-            margin-right: 0.2rem;
+            margin-right: 0.2em;
           }
         }
       }
@@ -50,8 +57,7 @@
   }
 
   #DevelopedWithReact {
-    height: 1.5rem;
-    line-height: 1.5rem;
+    line-height: 1.5em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,7 +65,7 @@
     transform: scale(0.8);
 
     .ReactLogo {
-      height: 120%;
+      height: 1.8em;
       width: auto;
       filter: brightness(0);
     }

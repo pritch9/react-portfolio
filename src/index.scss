@@ -24,13 +24,13 @@ html {
   --grey-light: #dcdcdc;
   --grey: #c4c4c4;
 
-  --page-padding: 0.5in;
+  --page-padding: 0;
 }
 
 @media print {
   html {
     font-size: 12px;
-    line-height: 1.05rem;
+    line-height: 1.05em;
 
     * {
       box-shadow: none !important;
