@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react"
+import {FC, SetStateAction, useEffect, useState} from "react"
 import styles from "./App.module.scss"
 import TitleBar from "./components/TitleBar";
 import SideBar from "./components/SideBar";
@@ -8,41 +8,38 @@ import ModMenu from "./components/ModMenu";
 
 export function SortByScore (a: string, b: string): number { return (Scores[b] ?? 0) - (Scores[a] ?? 0); }
 
+export const ScoreName = "Years Experience"
 export const Scores: Record<string, number> = {
 	"C": 2,
-	"ASM": 2,
+	"ASM": 0.5,
 	"C++": 3,
-	"PHP": 3,
-	"BASH": 2,
-	"OCaml": 1,
-	"Rust": 3,
-	"REST": 4,
-	"GraphQL": 3,
+	"PHP": 2,
+	"BASH": 4,
+	"Rust": 1,
+	"REST": 7,
+	"GraphQL": 1,
 	"AWS": 3,
-	"Linux": 4,
-	"SQL": 3,
-	"TypeScript": 4,
+	"Linux": 8,
+	"SQL": 6,
+	"TypeScript": 5,
 	"ReactJS": 4,
-	"NodeJS": 4,
-	"FeathersJS": 2,
-	"PostgreSQL": 3,
-	"Email Services": 2,
-	"WebAuthn": 3,
-	"Python": 3,
-	"Terraform": 3,
-	"Java": 4,
-	"Swift": 2,
+	"NodeJS": 5,
+	"PostgreSQL": 4,
+	"Python": 2,
+	"Terraform": 1,
+	"Java": 5,
+	"Swift": 1,
 	"Distributed Systems": 3,
-	"Protobuf": 2,
-	"AngularJS": 2,
-	"NextJS": 2,
-	"Sass": 3,
-	"Authentication": 4,
-	"Security/Cryptography": 3,
+	"Protobuf": 1,
+	"AngularJS": 1,
+	"NextJS": 0.5,
+	"Sass": 5,
+	"Authentication": 5,
+	"Security/Cryptography": 4,
 	"Networking": 3,
-	"Cryptography": 3,
-	'Embedded Systems': 2,
-	'Internet Applications': 4
+	"Cryptography": 4,
+	'Embedded Systems': 1,
+	'Internet Applications': 7
 }
 
 /*
@@ -192,7 +189,15 @@ const {name, title, contactInfo, education, miscExperience, miscExperienceDescri
 };
 
 const App: FC = () => {
-	const [activeTitle, setTitle] = useState(title);
+	const [activeTitle, setTitleState] = useState(title);
+
+	const setTitle = (action: SetStateAction<string>) => {
+		setTitleState(prevState => {
+			const title = typeof action === "function" ? action(prevState) : action;
+			document.title = `${title} - ${name}'s Resume - ${prettyDate(new Date())}`;
+			return title;
+		});
+	}
 
 	const sidebarInfo = {
 		"Education": education,
@@ -202,11 +207,6 @@ const App: FC = () => {
 		},
 		"Achievements": achievements
 	}
-
-	useEffect(() => {
-		document.title = `${activeTitle} - ${name}'s Resume - ${prettyDate(new Date())}`
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeTitle])
 
 	return <div id={styles.App}>
 		<ModMenu title={activeTitle} setTitle={setTitle}/>

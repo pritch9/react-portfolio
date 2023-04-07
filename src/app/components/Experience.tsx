@@ -2,7 +2,7 @@ import {FC, useMemo} from "react"
 import styles from "./Experience.module.scss"
 import {classNames, isJobInfo, isProjectInfo, prettyDateInfo, prettyTimeFrame} from "../../utilities";
 import {Scorable} from "./Scorable";
-import {SortByScore} from "../App";
+import {ScoreName, SortByScore} from "../App";
 
 export type ExperienceProps = {
     className: string,
@@ -113,7 +113,7 @@ const Experience: FC<ExperienceProps> = ({className, jobs, projects}) => {
 
     return <div id={styles.Experience} className={className}>
         <div id={styles.Legend}>
-            <span style={{ fontStyle: 'italic' }}>Comfortability</span><Scorable value={4} />
+            <span style={{ fontStyle: 'italic' }}>{ScoreName}</span><Scorable value={4} />
         </div>
         <div className={styles.Section}>
             <div className={styles.Title}>Job Experience</div>

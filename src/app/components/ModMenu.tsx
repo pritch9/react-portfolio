@@ -1,5 +1,5 @@
 import styles from './ModMenu.module.scss'
-import {ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useEffect, useState} from 'react';
+import {ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useEffect, useRef, useState} from 'react';
 
 type ModMenuProps = {
     title: string,
@@ -58,8 +58,10 @@ const titles = [
     ...[calculateCombinations(combinations)].flat()
 ]
 
-const ModMenu: FC<ModMenuProps> = ({ title, setTitle }) => {
-    const [autoTitles, setAutoTitles] = useState<string[]|undefined>(undefined);
+const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
+    const [{ titles: autoTitles, isAutoPrinting, isAutoPrintingHasLock }, setAutoPrinting] = useState({ titles: [] as string[], isAutoPrinting: false, isAutoPrintingHasLock: false });
+    const mounted = useRef(true);
+
     const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
         console.log(`CHanging title to ${event.target.value}`)
         setTitle(event.target.value)
@@ -70,34 +72,34 @@ const ModMenu: FC<ModMenuProps> = ({ title, setTitle }) => {
     }
 
     const onPrintAll = () => {
-        setAutoTitles(titles);
-        // console.log(titles);
+        if (!isAutoPrinting) {
+            setAutoPrinting({titles, isAutoPrinting: true, isAutoPrintingHasLock: false});
+        }
     }
 
-
     useEffect(() => {
-        if (autoTitles && autoTitles.length >= 0) {
-            window.print();
-        }
-    }, [autoTitles]);
-
-    useEffect(() => {
-        if (autoTitles) {
-            if (autoTitles.length === 0) {
-                setAutoTitles(undefined);
-                return;
-            }
-
+        if (autoTitles && autoTitles.length >= 0 && isAutoPrinting && !isAutoPrintingHasLock) {
+            setAutoPrinting(prevState => ({ ...prevState, isAutoPrintingHasLock: true }));
             let [first] = autoTitles;
             setTitle(first);
-            setAutoTitles((prevState) => prevState ? prevState.slice(1) : undefined);
+
+            setTimeout(() => {
+                if (!mounted.current) return;
+
+                if (window.confirm(`Print next title: ${autoTitles[0]}?`)) {
+                    window.print();
+                    setAutoPrinting(prevState => ({ titles: prevState.titles.slice(1), isAutoPrinting: prevState.titles.length > 1, isAutoPrintingHasLock: false }));
+                } else {
+                    setAutoPrinting({ titles: [], isAutoPrinting: false, isAutoPrintingHasLock: false });
+                }
+            }, 100);
         }
-    }, [autoTitles, setTitle]);
+    }, [autoTitles, isAutoPrinting, isAutoPrintingHasLock, setTitle]);
 
     return <div id={styles.ModMenu}>
-        <input type='text' id={styles.Title} value={title} onChange={onChangeTitle} />
-        <button id={styles.PrintButton} onClick={onPrint} type="button">Print</button>
-        <button id={styles.PrintButton} onClick={onPrintAll} type="button">Print All</button>
+        <input type='text' id={styles.Title} value={title} onChange={onChangeTitle} disabled={isAutoPrinting}/>
+        <button id={styles.PrintButton} onClick={onPrint} type="button" disabled={isAutoPrinting}>Print</button>
+        <button id={styles.PrintButton} onClick={onPrintAll} type="button" disabled={isAutoPrinting}>Print All</button>
     </div>
 }
 
