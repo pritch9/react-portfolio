@@ -113,7 +113,7 @@ const Experience: FC<ExperienceProps> = ({className, jobs, projects}) => {
 
     return <div id={styles.Experience} className={className}>
         <div id={styles.Legend}>
-            <span style={{ fontStyle: 'italic' }}>{ScoreName}</span><Scorable value={4} />
+            <span style={{ fontStyle: 'italic' }}>{ScoreName}</span><Scorable value={3} />
         </div>
         <div className={styles.Section}>
             <div className={styles.Title}>Job Experience</div>

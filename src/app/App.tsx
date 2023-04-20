@@ -163,10 +163,10 @@ const {name, title, contactInfo, education, miscExperience, miscExperienceDescri
 				role: "Creator",
 				keywords: ["Rust", "Distributed Systems", "Protobuf", "NextJS", "PostgreSQL", "Terraform"],
 				bullets: [
-					"Proprietary, distributed, peer-to-peer network operating system",
-					"Generic application framework for building secure, reliable, and confidential applications",
-					"Cloud computing techniques leveraged to provide a scalable, fault-tolerant, and highly available network",
-					"Project website (built with NextJS 13 beta): https://pritch.net/"
+					"Peer-to-peer, distributed network operating system",
+					"Scalable, fault-tolerant, and highly available network for IoT devices",
+					"Personal cloud network, providing opportunity for private services to be provided beyond the Edge",
+					"Project website: https://pritch.net/"
 				]
 			},
 			{

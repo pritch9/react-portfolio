@@ -96,6 +96,10 @@ const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
         }
     }, [autoTitles, isAutoPrinting, isAutoPrintingHasLock, setTitle]);
 
+    useEffect(() => {
+        setTitle(title);
+    }, [])
+
     return <div id={styles.ModMenu}>
         <input type='text' id={styles.Title} value={title} onChange={onChangeTitle} disabled={isAutoPrinting}/>
         <button id={styles.PrintButton} onClick={onPrint} type="button" disabled={isAutoPrinting}>Print</button>
