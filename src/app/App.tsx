@@ -60,7 +60,7 @@ const {name, title, contactInfo, education, miscExperience, miscExperienceDescri
 		"Phone Number": "(206) 227-3609",
 		"Email Address": "will@pritch.net",
 		"LinkedIn": "LinkedIn.com/in/wpritcha",
-		"GitHub": ["Github.com/pritch9\t\t- School (archive)", "Github.com/pritch09\t- Employment", "Github.com/pritch009\t- Personal (active)"],
+		"GitHub": ["Github.com/pritch009"],
 	},
 	professionalSummary: '',
 	education: {
@@ -69,12 +69,12 @@ const {name, title, contactInfo, education, miscExperience, miscExperienceDescri
 	miscExperienceDescription: "Spending lot of my free time tinkering and building, I try to pick up skills to help support my personal projects.  While not all have been applicable to my professional work, I'm comfortable working with what I've listed here, and very open to learning more skills related to areas of interest if required!",
 	miscExperience: {
 		'Cloud Development': ["AWS", "Terraform"],
-		'Areas of Interest': ['Security/Cryptography', 'Embedded Systems', 'Distributed Systems', 'Internet Applications'],
-		'Programming': ["C", "C++", "PHP", "BASH", "Rust"],
+		'Areas of Interest': ['Security/Cryptography', 'Embedded Systems', 'Distributed Systems'],
+		'Programming': ["C", "C++", "PHP", "Rust"],
 	},
 	achievements: {
-		"Boy Scouts of America": "Eagle Scout"
-	},
+		"Eagle Scout": "Boy Scouts of America"
+},
 	experience: {
 		jobs: [
 			{
@@ -201,7 +201,7 @@ const App: FC = () => {
 
 	const sidebarInfo = {
 		"Education": education,
-		"Misc. Experience": {
+		"Experience": {
 			description: miscExperienceDescription,
 			experience: miscExperience
 		},

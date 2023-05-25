@@ -3,6 +3,7 @@
   flex-direction: column;
   position: relative;
   margin: 0 var(--page-padding) var(--page-padding) 0;
+  gap: 1em;
 
   * {
     box-sizing: border-box;
@@ -25,13 +26,14 @@
     flex: 0 1 auto;
     display: flex;
     flex-direction: column;
+    gap: 0.5em;
 
     > .Title {
       flex: 0 0 auto;
       font-size: 1.2em;
       line-height: 1.2em;
       width: 100%;
-      padding: 1em 0 0.5em 1em;
+      padding: 1em 0 0 1em;
       opacity: 0.75;
     }
 
@@ -68,7 +70,7 @@
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          gap: 0.5em;
+          gap: 0.5rem;
 
           & > .Title {
             font-size: 1.2em;
@@ -91,8 +93,8 @@
 
             .Address {
               $scale: 0.8em;
+              display: var(--address-display, flex);
               font-size: $scale;
-              display: flex;
               gap: 0.5em;
               align-items: end;
             }
@@ -100,23 +102,19 @@
 
           .TimeFrame {
             gap: var(--title-gap);
-            display: none;
+            display: var(--dates-display, block);
             font-weight: normal;
             font-size: 0.85em;
-
-            &:before {
-              content: '|';
-            }
 
             align-self: end;
 
             .Contract {
               display: inline-flex;
               align-items: center;
-              gap: 0.5em;
+              gap: 0.5rem;
               font-size: 0.7em;
 
-              padding: 0.15em 0.4em;
+              padding: 0.15rem 0.4rem;
               border-radius: 0.7em;
               justify-self: start;
               width: fit-content;
@@ -136,7 +134,7 @@
 
         .Manager {
           flex: 0 0 auto;
-          display: flex;
+          display: var(--managers-display, flex);
           align-items: center;
           gap: 0.5em;
 

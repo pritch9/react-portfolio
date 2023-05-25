@@ -20,5 +20,10 @@
   #PrintButton {
     font-size: 1.1em;
     padding: 0.15em .5em;
+
+    &.active {
+        background: var(--primary-color);
+        color: white;
+    }
   }
 }

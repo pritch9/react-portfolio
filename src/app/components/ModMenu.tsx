@@ -60,6 +60,9 @@ const titles = [
 
 const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
     const [{ titles: autoTitles, isAutoPrinting, isAutoPrintingHasLock }, setAutoPrinting] = useState({ titles: [] as string[], isAutoPrinting: false, isAutoPrintingHasLock: false });
+    const [datesEnabled, setDatesEnabled] = useState(false);
+    const [managersEnabled, setManagersEnabled] = useState(false);
+    const [addressesEnabled, setAddressesEnabled] = useState(false);
     const mounted = useRef(true);
 
     const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +78,15 @@ const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
         if (!isAutoPrinting) {
             setAutoPrinting({titles, isAutoPrinting: true, isAutoPrintingHasLock: false});
         }
+    }
+
+    const onToggleDates = () => {
+        setDatesEnabled(prevState => !prevState);
+    }
+
+
+    const onToggleManagers = () => {
+        setManagersEnabled(prevState => !prevState);
     }
 
     useEffect(() => {
@@ -100,10 +112,27 @@ const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
         setTitle(title);
     }, [])
 
+    useEffect(() => {
+        const enableProperty = (property: string, enabled: boolean) => {
+            if (enabled) {
+                document.body.style.removeProperty(`--${property}-display`);
+            } else {
+                document.body.style.setProperty(`--${property}-display`, 'none');
+            }
+        }
+        enableProperty('dates', datesEnabled);
+        enableProperty('managers', managersEnabled);
+        enableProperty('address', addressesEnabled);
+    }, [datesEnabled, managersEnabled, addressesEnabled])
+
+
     return <div id={styles.ModMenu}>
         <input type='text' id={styles.Title} value={title} onChange={onChangeTitle} disabled={isAutoPrinting}/>
         <button id={styles.PrintButton} onClick={onPrint} type="button" disabled={isAutoPrinting}>Print</button>
         <button id={styles.PrintButton} onClick={onPrintAll} type="button" disabled={isAutoPrinting}>Print All</button>
+        <button id={styles.PrintButton} onClick={onToggleDates} type="button" className={datesEnabled ? 'active' : undefined}>Dates {datesEnabled ? 'Enabled' : 'Disabled'}</button>
+        <button id={styles.PrintButton} onClick={onToggleManagers} type="button" className={managersEnabled ? 'active' : undefined}>Managers {managersEnabled ? 'Enabled' : 'Disabled'}</button>
+        <button id={styles.PrintButton} onClick={onToggleManagers} type="button" className={addressesEnabled ? 'active' : undefined}>Addresses {addressesEnabled ? 'Enabled' : 'Disabled'}</button>
     </div>
 }
 
