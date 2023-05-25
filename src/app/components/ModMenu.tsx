@@ -89,6 +89,10 @@ const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
         setManagersEnabled(prevState => !prevState);
     }
 
+    const onToggleAddresses = () => {
+        setAddressesEnabled(prevState => !prevState);
+    }
+
     useEffect(() => {
         if (autoTitles && autoTitles.length >= 0 && isAutoPrinting && !isAutoPrintingHasLock) {
             setAutoPrinting(prevState => ({ ...prevState, isAutoPrintingHasLock: true }));
@@ -132,7 +136,7 @@ const ModMenu: FC<ModMenuProps> = ({title, setTitle}) => {
         <button id={styles.PrintButton} onClick={onPrintAll} type="button" disabled={isAutoPrinting}>Print All</button>
         <button id={styles.PrintButton} onClick={onToggleDates} type="button" className={datesEnabled ? 'active' : undefined}>Dates {datesEnabled ? 'Enabled' : 'Disabled'}</button>
         <button id={styles.PrintButton} onClick={onToggleManagers} type="button" className={managersEnabled ? 'active' : undefined}>Managers {managersEnabled ? 'Enabled' : 'Disabled'}</button>
-        <button id={styles.PrintButton} onClick={onToggleManagers} type="button" className={addressesEnabled ? 'active' : undefined}>Addresses {addressesEnabled ? 'Enabled' : 'Disabled'}</button>
+        <button id={styles.PrintButton} onClick={onToggleAddresses} type="button" className={addressesEnabled ? 'active' : undefined}>Addresses {addressesEnabled ? 'Enabled' : 'Disabled'}</button>
     </div>
 }
 
