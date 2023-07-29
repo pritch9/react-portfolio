@@ -3,7 +3,7 @@ import styles from './App.module.scss';
 import TitleBar from './components/TitleBar';
 import SideBar from './components/SideBar';
 import Experience from './components/Experience';
-import {prettyDate} from '../utilities';
+import {JobInfo, prettyDate, ProjectInfo} from '../utilities';
 import ModMenu from './components/ModMenu';
 
 export function SortByScore(a: string, b: string): number {
@@ -158,7 +158,10 @@ const {
 		jobs: [
 			{
 				role: 'Full-Stack Software Engineer',
-				company: 'Unum ID',
+				company: {
+					name: 'Verified Inc.',
+					formerly: 'Unum ID'
+				},
 				manager: 'Liam McCarty',
 				address: {street: '12 Embarcadero Ctr', city: 'San Francisco, CA', zip: '94111'},
 				keywords: ['TypeScript', 'ReactJS', 'NodeJS', 'FeathersJS', 'PostgreSQL', 'Email Services', 'WebAuthn'],
@@ -244,8 +247,8 @@ const {
 				keywords: ['Rust', 'Distributed Systems', 'Protobuf', 'NextJS', 'PostgreSQL', 'Terraform'],
 				bullets: [
 					'Peer-to-peer, distributed network operating system',
-					'Scalable, fault-tolerant, and highly available network for IoT devices',
-					'Personal cloud network, providing opportunity for private services to be provided beyond the Edge',
+					'Customizable to build networks for all kinds of use cases (storage, state machines, etc.)',
+					'Private network oriented, providing opportunity for services to be built beyond the Edge',
 					'Project website: https://pritch.net/'
 				]
 			},
@@ -274,7 +277,8 @@ const App: FC = () => {
 	const setTitle = (action: SetStateAction<string>) => {
 		setTitleState(prevState => {
 			const title = typeof action === 'function' ? action(prevState) : action;
-			document.title = `${title} - ${name}'s Resume - ${prettyDate(new Date())}`;
+			document.title = `William_Pritchard_resume`;
+			// document.title = `${title} - ${name}'s Resume - ${prettyDate(new Date())}`;
 			return title;
 		});
 	};

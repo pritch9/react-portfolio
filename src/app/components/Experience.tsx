@@ -1,6 +1,14 @@
 import {FC, useMemo} from "react"
 import styles from "./Experience.module.scss"
-import {classNames, isJobInfo, isProjectInfo, prettyDateInfo, prettyTimeFrame} from "../../utilities";
+import {
+    Address,
+    classNames,
+    FormerlyKnown,
+    JobInfo,
+    prettyDateInfo,
+    prettyTimeFrame,
+    ProjectInfo, zJobInfo, zProjectInfo
+} from '../../utilities';
 import {Scorable} from "./Scorable";
 import {ScoreName, SortByScore} from "../App";
 
@@ -16,7 +24,7 @@ type ExperienceSectionProps = {
 }
 type ExperienceSectionTemplate = {
     title: string,
-    subTitle: string,
+    subTitle: string | FormerlyKnown,
     timeFrame?: string
     contract?: string
     keywords?: string[],
@@ -28,7 +36,10 @@ const ManagerText = "Manager";
 
 const ExperienceSection: FC<ExperienceSectionProps> = ({info}) => {
     const {title, subTitle, timeFrame, contract, manager, keywords, address, bullets} = useMemo<ExperienceSectionTemplate>(() => {
-        if (isJobInfo(info)) {
+        const jobInfo = zJobInfo.safeParse(info);
+        const projectInfo = jobInfo.success ? null : zProjectInfo.safeParse(info);
+        if (jobInfo.success) {
+            const info = jobInfo.data;
             return {
                 title: info.role,
                 subTitle: info.company,
@@ -39,7 +50,8 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({info}) => {
                 address: info.address,
                 bullets: info.bullets,
             }
-        } else if (isProjectInfo(info)) {
+        } else if (projectInfo?.success) {
+            const info = projectInfo.data;
             return {
                 title: info.title,
                 subTitle: info.role,
@@ -73,7 +85,21 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({info}) => {
                     </div>
                 </div>
                 <div className={styles.SubTitle}>
-                    <div className={styles.Title}>{subTitle}</div>
+                    <div className={styles.Title}>
+                        {
+                            typeof subTitle === 'string'
+                                ? subTitle
+                                : (
+                                    <>
+                                        {subTitle.name}
+                                        <div className={styles.FormerlyKnown}>
+                                            <span className={styles.Label}>formerly, </span>
+                                            <span className={styles.Name}>{subTitle.formerly}</span>
+                                        </div>
+                                    </>
+                                )
+                        }
+                    </div>
                     {address && <div className={styles.Address}>
                         <div className={styles.Street}>{address.street},</div>
                         <div className={styles.CityZip}>{address.city} {address.zip}</div>

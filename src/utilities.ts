@@ -1,82 +1,50 @@
-export function isAddress(x: any): x is Address {
-    const props: PropsList = [
-        ["street", isStringObject],
-        ["city", isStringObject],
-        ["zip", isStringObject],
-    ]
-    return isProps(x, props)
-}
+import {z} from 'zod';
 
-export function isProps(x: any, props: PropsList): boolean {
-    for (let [name, validator] of props) {
-        if (!validator(x[name] as any)) {
-            return false
-        }
-    }
-    return true;
-}
+export const zAddress = z.object({
+    street: z.string(),
+    city: z.string(),
+    zip: z.string(),
+});
+export type Address = z.infer<typeof zAddress>;
 
-export function isStringObject(x: any): x is string {
-    return typeof x === "string"
-}
-export function isNumberObject(x: any): x is number {
-    return typeof x === "number"
-}
+export const zDateInfo = z.object({
+    month: z.string(),
+    year: z.number(),
+});
+export type DateInfo = z.infer<typeof zDateInfo>;
 
-export function isStringArray(x: any): x is Array<string> {
-    if (Array.isArray(x)) {
-        return x.length > 0 ? isStringObject(x[0]) : true
-    }
+export const zProjectInfo = z.object({
+    title: z.string(),
+    role: z.string(),
+    date: zDateInfo.optional(),
+    keywords: z.array(z.string()).optional(),
+    bullets: z.array(z.string()).optional(),
+});
+export type ProjectInfo = z.infer<typeof zProjectInfo>;
 
-    return false
-}
+export const zTimeFrame = z.object({
+    start: zDateInfo,
+    end: zDateInfo,
+});
+export type TimeFrame = z.infer<typeof zTimeFrame>;
 
-export function isDateInfo(x: any): x is DateInfo {
-    const props: PropsList = [
-        ["month", isStringObject],
-        ["year", isNumberObject]
-    ];
-    return isProps(x, props)
-}
+export const zCompanyFormerlyKnown = z.object({
+    name: z.string(),
+    formerly: z.string(),
+});
+export type FormerlyKnown = z.infer<typeof zCompanyFormerlyKnown>;
 
-export function isProjectInfo(x: any): x is ProjectInfo {
-    const props: PropsList = [
-        ["title", isStringObject],
-        ["role", isStringObject],
-        ["date", isOptional(isDateInfo)],
-        ["keywords", isOptional(isStringArray)],
-        ["bullets", isOptional(isStringArray)],
-    ];
-    return isProps(x, props);
-}
-
-export function isTimeFrame(x: any): x is TimeFrame {
-    const props: PropsList = [
-        ["start", isDateInfo],
-        ["end", isDateInfo],
-    ];
-    return isProps(x, props);
-}
-
-export function isJobInfo(x: any): x is JobInfo {
-    const props: PropsList = [
-        ["role", isStringObject],
-        ["company", isStringObject],
-        ["timeFrame", isTimeFrame],
-        ["manager", isOptional(isStringObject)],
-        ["address", isOptional(isAddress)],
-        ["keywords", isOptional(isStringArray)],
-        ["bullets", isOptional(isStringArray)],
-    ]
-
-    return isProps(x, props);
-}
-
-export function isOptional(validator: (x: any) => boolean) {
-    return (obj: any) => {
-        return obj === undefined || validator(obj)
-    }
-}
+export const zJobInfo = z.object({
+    role: z.string(),
+    company: z.string().or(zCompanyFormerlyKnown),
+    contract: zTimeFrame.optional(),
+    timeFrame: zTimeFrame,
+    manager: z.string().optional(),
+    address: zAddress.optional(),
+    keywords: z.array(z.string()).optional(),
+    bullets: z.array(z.string()).optional(),
+})
+export type JobInfo = z.infer<typeof zJobInfo>;
 
 export function prettyTimeFrame(x?: TimeFrame): string|undefined {
     if (!x) return undefined;

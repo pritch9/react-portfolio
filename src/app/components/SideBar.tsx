@@ -1,9 +1,8 @@
 import {FC} from "react"
 import styles from "./SideBar.module.scss"
-import {isStringArray} from "../../utilities";
-import logo from '../../logo.svg'
 import {Scorable} from "./Scorable";
 import {SortByScore} from "../App";
+import {z} from 'zod';
 
 export type ExperienceSection = Record<string, string|string[]>
 
@@ -34,9 +33,12 @@ const MapSubSection: (subSection: [string, ExperienceSection | ExperienceSection
     </div>
 }
 
+const zStringArray = z.string().array();
+
 const MapSubSegment: (subSection: [string, string|string[]], index: number) => JSX.Element = ([key, value], index) => {
-    const values = isStringArray(value)
-        ? value
+    const parsed = zStringArray.safeParse(value);
+    const values = parsed.success
+        ? parsed.data
             .sort(SortByScore)
             .map((value, index) => <Scorable title={value} className={styles.Value} key={`sb_ss_val_${index}`} /> )
         : value;
@@ -58,10 +60,6 @@ const SideBar: FC<SideBarProps> = ({ className, info }) => {
     return <div id={styles.SideBar} className={className}>
         { InfoSections }
         <div className={styles.FillGap} />
-        <div id={styles.DevelopedWithReact}>
-            <img className={styles.ReactLogo} src={logo} alt="React Logo" />
-            <span>Developed with React</span>
-        </div>
     </div>
 }
 export default SideBar
